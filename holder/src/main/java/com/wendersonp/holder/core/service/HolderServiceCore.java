@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class HolderService implements HolderServiceDrivingPort {
+public class HolderServiceCore implements HolderServiceDrivingPort {
 
     private final CryptographyServiceDrivenPort cryptographyServiceDrivenPort;
 

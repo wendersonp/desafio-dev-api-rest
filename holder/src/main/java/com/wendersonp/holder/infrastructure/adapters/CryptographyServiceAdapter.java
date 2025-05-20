@@ -5,16 +5,15 @@ import com.wendersonp.holder.infrastructure.exception.InfrastructureException;
 import com.wendersonp.holder.infrastructure.service.AWSSecretManagerService;
 import com.wendersonp.holder.util.ExceptionMessageEnum;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CryptographyServiceAdapter implements CryptographyServiceDrivenPort {
@@ -23,7 +22,9 @@ public class CryptographyServiceAdapter implements CryptographyServiceDrivenPort
 
     @Override
     public byte[] hashDocumentNumber(String documentNumber) {
+        log.info("Hashing document number of initial: {}", documentNumber.substring(0, 4));
         byte[] salt = awsSecretManagerService.retrieveSalt().getBytes(StandardCharsets.UTF_8);
+
         try {
            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
            messageDigest.update(salt);
@@ -35,6 +36,7 @@ public class CryptographyServiceAdapter implements CryptographyServiceDrivenPort
 
     @Override
     public String maskDocumentNumber(String documentNumber) {
+        log.info("Masking document number of initial: {}", documentNumber.substring(0, 4));
         return documentNumber.replace(documentNumber.substring(3, 9), "XXXXXX");
     }
 }
