@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: holder
+
+aws:
+  salt:
+    secretId: holder-dev-salt
