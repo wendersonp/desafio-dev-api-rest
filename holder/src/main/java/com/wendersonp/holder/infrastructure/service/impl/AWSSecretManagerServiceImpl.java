@@ -19,7 +19,7 @@ public class AWSSecretManagerServiceImpl implements AWSSecretManagerService {
     @Value("${aws.salt.secretId}")
     private String secretId;
 
-    private SecretsManagerClient secretsManagerClient;
+    private final SecretsManagerClient secretsManagerClient;
     @Override
     public String retrieveSalt() {
         try {

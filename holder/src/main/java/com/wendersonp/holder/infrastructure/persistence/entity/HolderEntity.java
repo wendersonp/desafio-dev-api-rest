@@ -20,10 +20,10 @@ public class HolderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(columnDefinition = "UUID")
     private UUID identifier;
 
-    @Column(name = "document_hash", unique = true, nullable = false, columnDefinition = "BINARY(32)")
+    @Column(name = "document_hash", unique = true, nullable = false, columnDefinition = "BYTEA")
     private byte[] documentHash;
 
     @Column(name = "masked_document_number", nullable = false)

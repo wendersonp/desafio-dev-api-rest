@@ -1,7 +1,22 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: holder
 
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/holder
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
 aws:
   salt:
-    secretId: holder-dev-salt
+    secretId: ${AWS_SALT_SECRET_ID}
+
+
