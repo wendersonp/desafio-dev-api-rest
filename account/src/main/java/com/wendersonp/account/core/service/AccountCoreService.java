@@ -75,10 +75,17 @@ public class AccountCoreService implements AccountCoreDrivingPort {
         return balanceCoreService.makeMovementOnBalance(accountModel, accountModel.getBalance().get().getIdentifier(), type, amount, description);
     }
 
-    private AccountModel findByIdentifier(UUID identifier) {
+    public AccountModel findByIdentifier(UUID identifier) {
         return accountRepository.findByIdentifier(identifier).orElseThrow(
                 () -> new BusinessException(ExceptionMessageEnum.ACCOUNT_NOT_FOUND)
         );
+    }
+
+    @Override
+    public AccountModel setBlockStatus(UUID identifier, BlockStatus status) {
+        AccountModel accountModel = findByIdentifier(identifier);
+        accountModel.setStatus(status);
+        return accountRepository.persist(accountModel);
     }
 
     private void validateHolder(HolderModel holderModel) {

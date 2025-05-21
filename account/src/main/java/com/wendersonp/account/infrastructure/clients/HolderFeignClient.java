@@ -11,9 +11,9 @@ import java.util.UUID;
 @FeignClient(name = "holder-service")
 public interface HolderFeignClient {
 
-    @GetMapping(value = "/holder", produces = "application/json")
+    @GetMapping(value = "/api/v1/holder", produces = "application/json")
     HolderResponseDTO findByDocumentNumber(@RequestParam String documentNumber);
 
-    @GetMapping(value = "/holder/{identifier}", produces = "application/json")
+    @GetMapping(value = "/api/v1/holder/{identifier}", produces = "application/json")
     HolderResponseDTO findByIdentifier(@PathVariable UUID identifier);
 }
