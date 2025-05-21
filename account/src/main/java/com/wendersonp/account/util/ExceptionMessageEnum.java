@@ -1,4 +1,4 @@
-package com.wendersonp.holder.util;
+package com.wendersonp.account.util;
 
 import lombok.Getter;
 
@@ -8,7 +8,14 @@ public enum ExceptionMessageEnum {
     DOCUMENT_NUMBER_ALREADY_EXISTS("document_number_already_exists", "Numero de documento já existe"),
     COULD_NOT_RETRIEVE_SECRET("could_not_retrieve_retrieve_secret", "Nao foi possivel recuperar o secret"),
     COULD_NOT_HASH_DOCUMENT_NUMBER("could_not_hash_document_number", "Nao foi possivel gerar o hash do documento"),
-    HOLDER_NOT_FOUND("holder_not_found", "Portador do documento nao foi encontrado");
+    HOLDER_INACTIVE("holder_inactive", "Portador do documento não está ativo"),
+    HOLDER_NOT_FOUND("holder_not_found", "Portador do documento não foi encontrado"),
+    WITHDRAW_DAILY_LIMIT("withdraw_daily_limit", "Limite diario de saque excedido"),
+    BLOCKED_ACCOUNT("blocked_account", "Conta está bloqueada"),
+    ACCOUNT_EXISTS("account_exists", "Conta ja cadastrada para o portador"),
+    ACCOUNT_NOT_FOUND("account_not_found", "Conta não foi encontrada"),
+    BALANCE_NOT_FOUND("balance_not_found", "Saldo nao foi encontrado"),
+    INSUFFICIENT_BALANCE("insufficient_balance", "Saldo insuficiente");
 
     private final String code;
     private final String message;

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -31,5 +32,10 @@ public class HolderRepositoryServiceAdapter implements HolderRepositoryDrivenPor
     @Override
     public Optional<HolderModel> findByDocumentHash(byte[] documentHash) {
         return holderEntityRepository.findByDocumentHash(documentHash).map(HolderEntity::toModel);
+    }
+
+    @Override
+    public Optional<HolderModel> findByIdentifier(UUID identifier) {
+        return holderEntityRepository.findById(identifier).map(HolderEntity::toModel);
     }
 }

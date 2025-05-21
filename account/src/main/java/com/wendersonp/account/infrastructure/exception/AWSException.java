@@ -1,6 +1,6 @@
-package com.wendersonp.holder.infrastructure.exception;
+package com.wendersonp.account.infrastructure.exception;
 
-import com.wendersonp.holder.util.ExceptionMessageEnum;
+import com.wendersonp.account.util.ExceptionMessageEnum;
 
 public class AWSException extends RuntimeException {
 

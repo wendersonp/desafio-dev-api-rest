@@ -5,7 +5,7 @@ import com.wendersonp.holder.core.model.HolderModel;
 import com.wendersonp.holder.core.model.HolderRequestModel;
 import com.wendersonp.holder.core.ports.driven.CryptographyServiceDrivenPort;
 import com.wendersonp.holder.core.ports.driven.HolderRepositoryDrivenPort;
-import com.wendersonp.holder.core.service.HolderServiceCore;
+import com.wendersonp.holder.core.service.HolderCoreService;
 import com.wendersonp.holder.unit.core.fixture.HolderFixture;
 import com.wendersonp.holder.unit.core.fixture.HolderRequestFixture;
 import com.wendersonp.holder.util.ExceptionMessageEnum;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class HolderServiceCoreTest {
+class HolderCoreServiceTest {
 
     @Mock
     private CryptographyServiceDrivenPort cryptographyServiceDrivenPort;
@@ -33,7 +33,7 @@ class HolderServiceCoreTest {
     private HolderRepositoryDrivenPort holderRepositoryDrivenPort;
 
     @InjectMocks
-    private HolderServiceCore holderService;
+    private HolderCoreService holderService;
 
     void setUpSuccessfullFind() {
         when(cryptographyServiceDrivenPort.hashDocumentNumber("64699583032")).thenReturn("hashSomething".getBytes(StandardCharsets.UTF_8));

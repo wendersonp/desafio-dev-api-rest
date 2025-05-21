@@ -6,16 +6,17 @@ import com.wendersonp.holder.core.model.HolderRequestModel;
 import com.wendersonp.holder.core.model.enumeration.StatusEnum;
 import com.wendersonp.holder.core.ports.driven.CryptographyServiceDrivenPort;
 import com.wendersonp.holder.core.ports.driven.HolderRepositoryDrivenPort;
-import com.wendersonp.holder.core.ports.driving.HolderServiceDrivingPort;
+import com.wendersonp.holder.core.ports.driving.HolderCoreDrivingPort;
 import com.wendersonp.holder.util.ExceptionMessageEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class HolderServiceCore implements HolderServiceDrivingPort {
+public class HolderCoreService implements HolderCoreDrivingPort {
 
     private final CryptographyServiceDrivenPort cryptographyServiceDrivenPort;
 
@@ -39,6 +40,12 @@ public class HolderServiceCore implements HolderServiceDrivingPort {
         byte[] documentHash = cryptographyServiceDrivenPort.hashDocumentNumber(documentNumber);
         return findByDocumentHash(documentHash)
                 .orElseThrow(() -> new BusinessException(ExceptionMessageEnum.DOCUMENT_NUMBER_NOT_FOUND));
+    }
+
+    @Override
+    public HolderModel findByIdentifier(UUID identifier) {
+        return holderRepositoryDrivenPort.findByIdentifier(identifier).orElseThrow(
+                () -> new BusinessException(ExceptionMessageEnum.HOLDER_NOT_FOUND));
     }
 
     private Optional<HolderModel> findByDocumentHash(byte[] documentHash) {

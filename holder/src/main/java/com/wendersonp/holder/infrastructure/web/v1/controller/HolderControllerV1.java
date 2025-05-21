@@ -34,4 +34,11 @@ public class HolderControllerV1 {
         return holderApplicationService.findByDocument(documentNumber);
     }
 
+    @GetMapping("/{identifier}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public HolderResponseDTO findByIdentifier(@PathVariable UUID identifier) {
+        log.info("Finding holder by identifier");
+        return holderApplicationService.findByIdentifier(identifier);
+    }
+
 }
