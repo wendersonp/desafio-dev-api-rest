@@ -41,4 +41,11 @@ public class HolderControllerV1 {
         return holderApplicationService.findByIdentifier(identifier);
     }
 
+    @DeleteMapping("/{identifier}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteByIdentifier(@PathVariable UUID identifier) {
+        log.info("Deleting holder by identifier {}", identifier);
+        holderApplicationService.deleteByIdentifier(identifier);
+    }
+
 }

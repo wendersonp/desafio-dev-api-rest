@@ -26,13 +26,33 @@ public class HolderCoreService implements HolderCoreDrivingPort {
     public HolderModel save(HolderRequestModel holderRequestModel) {
         byte[] documentHash = cryptographyServiceDrivenPort.hashDocumentNumber(holderRequestModel.getDocumentNumber());
 
-        findByDocumentHash(documentHash).ifPresent(holderModel -> {
-            throw new BusinessException(ExceptionMessageEnum.DOCUMENT_NUMBER_ALREADY_EXISTS);
-        });
+        Optional<HolderModel> holderModelOptional = findByDocumentHash(documentHash);
+        validateIfHolderIsActive(holderModelOptional);
+
+        if (holderModelOptional.isPresent() && holderModelOptional.get().getStatus().equals(StatusEnum.INACTIVE)) {
+            return reactivateHolder(holderModelOptional);
+        }
 
         String maskedDocumentNumber = cryptographyServiceDrivenPort.maskDocumentNumber(holderRequestModel.getDocumentNumber());
         var holderModel = new HolderModel(documentHash, maskedDocumentNumber, holderRequestModel.getName(), StatusEnum.ACTIVE);
         return holderRepositoryDrivenPort.persist(holderModel);
+    }
+
+    private HolderModel reactivateHolder(Optional<HolderModel> holderModelOptional) {
+        if (holderModelOptional.isEmpty()) {
+            throw new BusinessException(ExceptionMessageEnum.HOLDER_NOT_FOUND);
+        }
+        HolderModel holderModel = holderModelOptional.get();
+        holderModel.setStatus(StatusEnum.ACTIVE);
+        return holderRepositoryDrivenPort.persist(holderModel);
+    }
+
+    private void validateIfHolderIsActive(Optional<HolderModel> holderModelOptional) {
+        holderModelOptional
+                .filter(holderModel -> holderModel.getStatus().equals(StatusEnum.ACTIVE))
+                .ifPresent(holderModel -> {
+            throw new BusinessException(ExceptionMessageEnum.DOCUMENT_NUMBER_ALREADY_EXISTS);
+        });
     }
 
     @Override
@@ -46,6 +66,14 @@ public class HolderCoreService implements HolderCoreDrivingPort {
     public HolderModel findByIdentifier(UUID identifier) {
         return holderRepositoryDrivenPort.findByIdentifier(identifier).orElseThrow(
                 () -> new BusinessException(ExceptionMessageEnum.HOLDER_NOT_FOUND));
+    }
+
+    @Override
+    public void deleteByIdentifier(UUID identifier) {
+        holderRepositoryDrivenPort.findByIdentifier(identifier).ifPresent(holderModel -> {
+            holderModel.setStatus(StatusEnum.INACTIVE);
+            holderRepositoryDrivenPort.persist(holderModel);
+        });
     }
 
     private Optional<HolderModel> findByDocumentHash(byte[] documentHash) {

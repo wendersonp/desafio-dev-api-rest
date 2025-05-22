@@ -10,4 +10,6 @@ public interface HolderApplicationService {
     HolderResponseDTO findByDocument(String documentNumber);
 
     HolderResponseDTO findByIdentifier(UUID identifier);
+
+    void deleteByIdentifier(UUID identifier);
 }

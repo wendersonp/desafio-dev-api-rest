@@ -34,4 +34,9 @@ public class HolderApplicationServiceImpl implements HolderApplicationService {
         HolderModel holderModel = holderService.findByIdentifier(identifier);
         return new HolderResponseDTO(holderModel);
     }
+
+    @Override
+    public void deleteByIdentifier(UUID identifier) {
+        holderService.deleteByIdentifier(identifier);
+    }
 }

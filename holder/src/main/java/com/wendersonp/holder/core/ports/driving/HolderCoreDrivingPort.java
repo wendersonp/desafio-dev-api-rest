@@ -13,4 +13,6 @@ public interface HolderCoreDrivingPort {
     HolderModel findByDocument(String documentNumber) throws BusinessException;
 
     HolderModel findByIdentifier(UUID identifier);
+
+    void deleteByIdentifier(UUID identifier);
 }
