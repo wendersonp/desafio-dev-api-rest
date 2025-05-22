@@ -35,7 +35,6 @@ replay_pid*
 /.idea/misc.xml
 /terraform/rds/.terraform/modules/modules.json
 /.idea/modules.xml
-/terraform/rds/terraform.tfstate
-/terraform/rds/terraform.tfstate.backup
 /terraform/rds/.terraform/providers/registry.terraform.io/hashicorp/aws/5.98.0/linux_amd64/terraform-provider-aws_v5.98.0_x5
 /.idea/vcs.xml
+/holder/aws.env

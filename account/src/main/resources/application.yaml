@@ -1,0 +1,31 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: account
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            holder-service:
+              - uri: http://localhost:8081
+            account-service:
+              - uri: http://localhost:8082
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/account
+    username: ${DB_USER:digital}
+    password: ${DB_PASSWORD:digital}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+account:
+  default-branch: 0001
+  withdraw-default-limit: 2000
+
