@@ -10,8 +10,16 @@ public enum MovementType {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
+    public String value() {
         return value;
+    }
+
+    public static MovementType fromValue(String value) {
+        for (MovementType movementType : MovementType.values()) {
+            if (movementType.value().equals(value)) {
+                return movementType;
+            }
+        }
+        return null;
     }
 }

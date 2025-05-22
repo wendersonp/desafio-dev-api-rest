@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -48,5 +49,11 @@ public class AccountControllerV1 {
     @ResponseStatus(value = HttpStatus.OK)
     public AccountResponseDTO unblockAccount(@PathVariable UUID identifier) {
         return accountApplicationService.unblockAccount(identifier);
+    }
+
+    @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<AccountResponseDTO> findAll() {
+        return accountApplicationService.findAll();
     }
 }

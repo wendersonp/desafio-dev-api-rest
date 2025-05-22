@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -86,6 +87,11 @@ public class AccountCoreService implements AccountCoreDrivingPort {
         AccountModel accountModel = findByIdentifier(identifier);
         accountModel.setStatus(status);
         return accountRepository.persist(accountModel);
+    }
+
+    @Override
+    public List<AccountModel> findAll() {
+        return accountRepository.findAll();
     }
 
     private void validateHolder(HolderModel holderModel) {

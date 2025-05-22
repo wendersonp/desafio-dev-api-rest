@@ -6,6 +6,7 @@ import com.wendersonp.account.core.model.enumeration.BlockStatus;
 import com.wendersonp.account.core.model.enumeration.MovementType;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 public interface AccountCoreDrivingPort {
@@ -22,4 +23,6 @@ public interface AccountCoreDrivingPort {
     AccountModel findByIdentifier(UUID identifier);
 
     AccountModel setBlockStatus(UUID identifier, BlockStatus status);
+
+    List<AccountModel> findAll();
 }

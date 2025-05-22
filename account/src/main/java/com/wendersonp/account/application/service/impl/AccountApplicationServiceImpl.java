@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -48,5 +49,12 @@ public class AccountApplicationServiceImpl implements AccountApplicationService 
     @Override
     public AccountResponseDTO unblockAccount(UUID identifier) {
         return new AccountResponseDTO(accountCoreService.setBlockStatus(identifier, BlockStatus.UNBLOCKED));
+    }
+
+    @Override
+    public List<AccountResponseDTO> findAll() {
+        return accountCoreService.findAll().stream()
+                .map(AccountResponseDTO::new)
+                .toList();
     }
 }

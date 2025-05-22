@@ -9,8 +9,16 @@ public enum BlockStatus {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
+    public String value() {
         return value;
+    }
+
+    public static BlockStatus fromValue(String value) {
+        for (BlockStatus blockStatus : BlockStatus.values()) {
+            if (blockStatus.value().equals(value)) {
+                return blockStatus;
+            }
+        }
+        throw new IllegalArgumentException("Invalid block status value: " + value);
     }
 }

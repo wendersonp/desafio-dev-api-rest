@@ -3,9 +3,8 @@ package com.wendersonp.account.application.service;
 import com.wendersonp.account.application.dto.AccountResponseDTO;
 import com.wendersonp.account.application.dto.BalanceResponseDTO;
 import com.wendersonp.account.application.dto.MovementRequestDTO;
-import com.wendersonp.account.core.model.enumeration.MovementType;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 public interface AccountApplicationService {
@@ -19,4 +18,6 @@ public interface AccountApplicationService {
     AccountResponseDTO blockAccount(UUID identifier);
 
     AccountResponseDTO unblockAccount(UUID identifier);
+
+    List<AccountResponseDTO> findAll();
 }

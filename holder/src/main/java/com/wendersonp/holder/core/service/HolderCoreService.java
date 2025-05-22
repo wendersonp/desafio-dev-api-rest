@@ -11,6 +11,7 @@ import com.wendersonp.holder.util.ExceptionMessageEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -69,11 +70,13 @@ public class HolderCoreService implements HolderCoreDrivingPort {
     }
 
     @Override
+    public List<HolderModel> findAll() {
+        return holderRepositoryDrivenPort.findAllByStatus(StatusEnum.ACTIVE);
+    }
+
+    @Override
     public void deleteByIdentifier(UUID identifier) {
-        holderRepositoryDrivenPort.findByIdentifier(identifier).ifPresent(holderModel -> {
-            holderModel.setStatus(StatusEnum.INACTIVE);
-            holderRepositoryDrivenPort.persist(holderModel);
-        });
+        holderRepositoryDrivenPort.setStatus(identifier, StatusEnum.INACTIVE);
     }
 
     private Optional<HolderModel> findByDocumentHash(byte[] documentHash) {

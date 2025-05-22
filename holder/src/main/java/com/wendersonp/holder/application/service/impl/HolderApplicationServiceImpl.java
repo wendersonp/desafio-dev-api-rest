@@ -8,6 +8,7 @@ import com.wendersonp.holder.core.ports.driving.HolderCoreDrivingPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,5 +39,13 @@ public class HolderApplicationServiceImpl implements HolderApplicationService {
     @Override
     public void deleteByIdentifier(UUID identifier) {
         holderService.deleteByIdentifier(identifier);
+    }
+
+    @Override
+    public List<HolderResponseDTO> findAll() {
+        return holderService.findAll()
+                .stream()
+                .map(HolderResponseDTO::new)
+                .toList();
     }
 }

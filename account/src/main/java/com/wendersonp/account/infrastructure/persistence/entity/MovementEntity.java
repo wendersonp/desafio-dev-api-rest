@@ -43,7 +43,6 @@ public class MovementEntity {
     @Column(columnDefinition = "VARCHAR(255)")
     private String description;
 
-    @Enumerated(EnumType.STRING)
     private MovementType type;
 
     public MovementEntity(MovementModel movementModel) {

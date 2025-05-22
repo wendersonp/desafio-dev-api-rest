@@ -1,7 +1,6 @@
 package com.wendersonp.account.infrastructure.persistence.entity;
 
 import com.wendersonp.account.core.model.AccountModel;
-import com.wendersonp.account.core.model.BalanceModel;
 import com.wendersonp.account.core.model.enumeration.BlockStatus;
 import jakarta.persistence.*;
 import lombok.*;

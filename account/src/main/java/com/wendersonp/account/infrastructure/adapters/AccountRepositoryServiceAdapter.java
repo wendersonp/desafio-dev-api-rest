@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,5 +36,13 @@ public class AccountRepositoryServiceAdapter implements AccountRepositoryDrivenP
     @Override
     public Optional<AccountModel> findByIdentifier(UUID identifier) {
         return accountEntityRepository.findByIdentifier(identifier).map(AccountEntity::toModel);
+    }
+
+    @Override
+    public List<AccountModel> findAll() {
+        return accountEntityRepository.findAll()
+                .stream()
+                .map(AccountEntity::toModel)
+                .toList();
     }
 }

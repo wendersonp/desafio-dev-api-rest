@@ -1,6 +1,5 @@
 package com.wendersonp.account.infrastructure.persistence.repository;
 
-import com.wendersonp.account.core.model.AccountModel;
 import com.wendersonp.account.infrastructure.persistence.entity.AccountEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -4,6 +4,7 @@ import com.wendersonp.holder.core.exceptions.BusinessException;
 import com.wendersonp.holder.core.model.HolderModel;
 import com.wendersonp.holder.core.model.HolderRequestModel;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface HolderCoreDrivingPort {
@@ -13,6 +14,8 @@ public interface HolderCoreDrivingPort {
     HolderModel findByDocument(String documentNumber) throws BusinessException;
 
     HolderModel findByIdentifier(UUID identifier);
+
+    List<HolderModel> findAll();
 
     void deleteByIdentifier(UUID identifier);
 }
