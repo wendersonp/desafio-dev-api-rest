@@ -4,15 +4,18 @@ import com.wendersonp.holder.application.dto.HolderRequestDTO;
 import com.wendersonp.holder.application.dto.HolderResponseDTO;
 import com.wendersonp.holder.application.service.HolderApplicationService;
 import com.wendersonp.holder.core.model.HolderModel;
-import com.wendersonp.holder.core.ports.driving.HolderServiceDrivingPort;
+import com.wendersonp.holder.core.ports.driving.HolderCoreDrivingPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class HolderApplicationServiceImpl implements HolderApplicationService {
 
-    private final HolderServiceDrivingPort holderService;
+    private final HolderCoreDrivingPort holderService;
 
 
     @Override
@@ -25,5 +28,24 @@ public class HolderApplicationServiceImpl implements HolderApplicationService {
     public HolderResponseDTO findByDocument(String documentNumber) {
         HolderModel holderModel = holderService.findByDocument(documentNumber);
         return new HolderResponseDTO(holderModel);
+    }
+
+    @Override
+    public HolderResponseDTO findByIdentifier(UUID identifier) {
+        HolderModel holderModel = holderService.findByIdentifier(identifier);
+        return new HolderResponseDTO(holderModel);
+    }
+
+    @Override
+    public void deleteByIdentifier(UUID identifier) {
+        holderService.deleteByIdentifier(identifier);
+    }
+
+    @Override
+    public List<HolderResponseDTO> findAll() {
+        return holderService.findAll()
+                .stream()
+                .map(HolderResponseDTO::new)
+                .toList();
     }
 }

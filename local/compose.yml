@@ -1,0 +1,34 @@
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: digital
+      POSTGRES_PASSWORD: digital
+      POSTGRES_MULTIPLE_DATABASES: holder,account
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"            # LocalStack edge port
+      - "4510-4559:4510-4559"  # External services port range
+    environment:
+      - SERVICES=secretsmanager
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - LS_LOG=info
+    volumes:
+      - ./init-localstack:/etc/localstack/init/ready.d/
+
+volumes:
+  postgres_data:
+    
