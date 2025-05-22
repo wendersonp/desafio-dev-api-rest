@@ -1,6 +1,5 @@
-package com.wendersonp.holder.unit.infrastructure.adapters;
+package com.wendersonp.holder.infrastructure.adapters;
 
-import com.wendersonp.holder.infrastructure.adapters.CryptographyServiceAdapter;
 import com.wendersonp.holder.infrastructure.service.AWSSecretManagerService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

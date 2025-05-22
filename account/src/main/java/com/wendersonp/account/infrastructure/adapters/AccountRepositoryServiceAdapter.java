@@ -28,7 +28,7 @@ public class AccountRepositoryServiceAdapter implements AccountRepositoryDrivenP
     }
 
     @Override
-    public Boolean exists(UUID holderId) {
+    public boolean exists(UUID holderId) {
         return accountEntityRepository.existsByHolderId(holderId);
     }
 

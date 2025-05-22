@@ -1,13 +1,12 @@
-package com.wendersonp.holder.unit.core.service;
+package com.wendersonp.holder.core.service;
 
 import com.wendersonp.holder.core.exceptions.BusinessException;
 import com.wendersonp.holder.core.model.HolderModel;
 import com.wendersonp.holder.core.model.HolderRequestModel;
 import com.wendersonp.holder.core.ports.driven.CryptographyServiceDrivenPort;
 import com.wendersonp.holder.core.ports.driven.HolderRepositoryDrivenPort;
-import com.wendersonp.holder.core.service.HolderCoreService;
-import com.wendersonp.holder.unit.core.fixture.HolderFixture;
-import com.wendersonp.holder.unit.core.fixture.HolderRequestFixture;
+import com.wendersonp.holder.core.fixture.HolderFixture;
+import com.wendersonp.holder.core.fixture.HolderRequestFixture;
 import com.wendersonp.holder.util.ExceptionMessageEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

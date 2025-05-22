@@ -1,4 +1,4 @@
-package com.wendersonp.holder.unit.core.fixture;
+package com.wendersonp.holder.core.fixture;
 
 import com.wendersonp.holder.core.model.HolderModel;
 import com.wendersonp.holder.core.model.enumeration.StatusEnum;

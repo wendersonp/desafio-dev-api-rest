@@ -9,7 +9,7 @@ public interface AccountRepositoryDrivenPort {
 
     AccountModel persist(AccountModel accountModel);
 
-    Boolean exists(UUID holderId);
+    boolean exists(UUID holderId);
 
     Optional<AccountModel> findByIdentifier(UUID identifier);
 }

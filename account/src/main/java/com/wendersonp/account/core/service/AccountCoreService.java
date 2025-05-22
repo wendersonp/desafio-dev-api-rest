@@ -92,7 +92,7 @@ public class AccountCoreService implements AccountCoreDrivingPort {
         if (holderModel.getStatus() != StatusEnum.ACTIVE) {
             throw new BusinessException(ExceptionMessageEnum.HOLDER_INACTIVE);
         }
-        if (accountRepository.exists(holderModel.getIdentifier())) {
+        if (Boolean.TRUE.equals(accountRepository.exists(holderModel.getIdentifier()))) {
             throw new BusinessException(ExceptionMessageEnum.ACCOUNT_EXISTS);
         }
     }
