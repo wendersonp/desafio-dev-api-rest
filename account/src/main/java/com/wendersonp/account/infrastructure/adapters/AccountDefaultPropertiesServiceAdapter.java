@@ -2,6 +2,7 @@ package com.wendersonp.account.infrastructure.adapters;
 
 import com.wendersonp.account.core.model.AccountPropertiesModel;
 import com.wendersonp.account.core.ports.driven.AccountDefaultPropertiesDrivenPort;
+import com.wendersonp.account.infrastructure.config.AccountDefaultProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,13 @@ import java.math.RoundingMode;
 @RequiredArgsConstructor
 public class AccountDefaultPropertiesServiceAdapter implements AccountDefaultPropertiesDrivenPort {
 
-    private String defaultBranch;
-    private String withdrawDefaultLimit;
+    private final AccountDefaultProperties accountDefaultProperties;
 
     @Override
     public AccountPropertiesModel getDefaultProperties() {
         return AccountPropertiesModel.builder()
-                .defaultBranch(defaultBranch)
-                .withdrawDefaultLimit(new BigDecimal(withdrawDefaultLimit).setScale(2, RoundingMode.HALF_UP))
+                .defaultBranch(accountDefaultProperties.getDefaultBranch())
+                .withdrawDefaultLimit(new BigDecimal(accountDefaultProperties.getWithdrawDefaultLimit()).setScale(2, RoundingMode.HALF_UP))
                 .build();
     }
 }

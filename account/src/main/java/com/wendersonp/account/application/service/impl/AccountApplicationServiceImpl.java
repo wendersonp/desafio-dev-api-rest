@@ -17,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AccountApplicationServiceImpl implements AccountApplicationService {
 
-    private AccountCoreDrivingPort accountCoreService;
+    private final AccountCoreDrivingPort accountCoreService;
 
     @Override
     public AccountResponseDTO createAccount(String documentNumber) {

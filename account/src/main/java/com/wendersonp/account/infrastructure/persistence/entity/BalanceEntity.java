@@ -42,5 +42,6 @@ public class BalanceEntity {
     public BalanceEntity(BalanceModel balanceModel) {
         this.identifier = balanceModel.getIdentifier();
         this.balance = balanceModel.getBalance();
+        this.lastUpdate = balanceModel.getLastUpdate();
     }
 }

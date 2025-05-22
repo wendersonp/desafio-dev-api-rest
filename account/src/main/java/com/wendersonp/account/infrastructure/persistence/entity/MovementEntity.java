@@ -1,6 +1,5 @@
 package com.wendersonp.account.infrastructure.persistence.entity;
 
-import com.wendersonp.account.core.model.AccountModel;
 import com.wendersonp.account.core.model.MovementModel;
 import com.wendersonp.account.core.model.enumeration.MovementType;
 import jakarta.persistence.*;
@@ -14,7 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tb_movement", indexes = {
-    @Index(name = "idx_account_id", columnList = "account, createdAt")
+    @Index(name = "idx_account_id", columnList = "fk_account_id, created_at")
 })
 @EntityListeners(AuditingEntityListener.class)
 @Getter

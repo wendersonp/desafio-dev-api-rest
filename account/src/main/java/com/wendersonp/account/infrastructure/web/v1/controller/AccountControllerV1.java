@@ -34,7 +34,7 @@ public class AccountControllerV1 {
 
     @PostMapping(V1Routes.ACCOUNT_MOVEMENT_PATH)
     @ResponseStatus(value = HttpStatus.OK)
-    public BalanceResponseDTO makeMovementOnBalance(@Valid MovementRequestDTO movementRequestDTO) {
+    public BalanceResponseDTO makeMovementOnBalance(@Valid @RequestBody MovementRequestDTO movementRequestDTO) {
         return accountApplicationService.makeMovementOnBalance(movementRequestDTO);
     }
 

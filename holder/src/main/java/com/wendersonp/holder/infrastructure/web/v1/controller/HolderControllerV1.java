@@ -22,7 +22,7 @@ public class HolderControllerV1 {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public HolderResponseDTO save(@Valid HolderRequestDTO holderRequestDTO) {
+    public HolderResponseDTO save(@Valid @RequestBody HolderRequestDTO holderRequestDTO) {
         log.info("Saving holder {}", holderRequestDTO.name());
         return holderApplicationService.save(holderRequestDTO);
     }

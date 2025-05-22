@@ -6,8 +6,10 @@ import lombok.Getter;
 @Getter
 public class BusinessException extends RuntimeException{
 
+    private final String code;
 
     public BusinessException(ExceptionMessageEnum exceptionMessageEnum) {
         super(exceptionMessageEnum.getMessage());
+        this.code = exceptionMessageEnum.getCode();
     }
 }
