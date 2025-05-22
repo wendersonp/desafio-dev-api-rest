@@ -1,8 +1,9 @@
 package com.wendersonp.account.infrastructure.persistence.repository;
 
-import com.wendersonp.account.core.model.enumeration.MovementType;
 import com.wendersonp.account.infrastructure.persistence.entity.MovementEntity;
 import feign.Param;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,6 @@ public interface MovementEntityRepository extends JpaRepository<MovementEntity, 
             @Param("accountIdentifier") UUID accountIdentifier,
             @Param("type") String type
     );
+
+    Page<MovementEntity> findByAccountIdentifierAndCreatedAtBetween(UUID accountIdentifier, LocalDateTime beginningDate, LocalDateTime endingDate, Pageable pageable);
 }

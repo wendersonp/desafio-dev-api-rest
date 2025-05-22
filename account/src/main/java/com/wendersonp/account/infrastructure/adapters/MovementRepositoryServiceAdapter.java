@@ -7,10 +7,13 @@ import com.wendersonp.account.infrastructure.persistence.entity.MovementEntity;
 import com.wendersonp.account.infrastructure.persistence.repository.MovementEntityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -29,5 +32,12 @@ public class MovementRepositoryServiceAdapter implements MovementRepositoryDrive
     public BigDecimal getTotalMovementWithinAPeriod(LocalDateTime beginningDate, LocalDateTime endingDate, UUID accountIdentifier, MovementType type) {
         BigDecimal total = movementRepository.totalMovementBetweenTwoDates(beginningDate, endingDate, accountIdentifier, type.name());
         return total == null ? BigDecimal.ZERO : total;
+    }
+
+    @Override
+    public Page<MovementModel> getMovementsWithinAPeriod(LocalDateTime startTime, LocalDateTime endTime, UUID accountIdentifier, Pageable pageable) {
+        return movementRepository
+                .findByAccountIdentifierAndCreatedAtBetween(accountIdentifier, startTime, endTime, pageable)
+                .map(MovementEntity::toModel);
     }
 }

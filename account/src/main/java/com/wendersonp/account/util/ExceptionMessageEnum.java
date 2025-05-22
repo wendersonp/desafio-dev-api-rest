@@ -15,7 +15,9 @@ public enum ExceptionMessageEnum {
     ACCOUNT_EXISTS("account_exists", "Conta ja cadastrada para o portador"),
     ACCOUNT_NOT_FOUND("account_not_found", "Conta não foi encontrada"),
     BALANCE_NOT_FOUND("balance_not_found", "Saldo nao foi encontrado"),
-    INSUFFICIENT_BALANCE("insufficient_balance", "Saldo insuficiente");
+    INSUFFICIENT_BALANCE("insufficient_balance", "Saldo insuficiente"),
+    INVALID_DATES("invalid_dates", "As datas inseridas para a consulta são inválidas"),
+    FUTURE_DATE("future_date", "Data futura nao permitida");
 
     private final String code;
     private final String message;

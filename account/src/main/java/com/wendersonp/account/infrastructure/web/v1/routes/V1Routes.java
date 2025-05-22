@@ -14,4 +14,6 @@ public class V1Routes {
     public static final String ACCOUNT_BLOCK_PATH = ACCOUNT_PATH + "/{identifier}/block";
 
     public static final String ACCOUNT_UNBLOCK_PATH = ACCOUNT_PATH + "/{identifier}/unblock";
+
+    public static final String MOVEMENT_PATH = BASE_PATH + "/movement";
 }
