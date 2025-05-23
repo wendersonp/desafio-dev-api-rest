@@ -1,0 +1,47 @@
+name: Compilação e entrega do microsservico holder
+on:
+  push:
+    branches: [ deploy/holder ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+#    - name: Configurando o JDK
+#      uses: actions/setup-java@v2
+#      with:
+#        java-version: '21'
+#        distribution: 'temurin'
+
+# Comentado pois o build é feito a partir do Dockerfile
+#    - name: Cache Maven packages
+#      uses: actions/cache@v4
+#      with:
+#        path: ~/.m2
+#        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+#        restore-keys: ${{ runner.os }}-m2
+#
+#    - name: Empacotando a aplicação
+#      run: mvn -B package --file holder/pom.xml
+
+    - name: Configurando credenciais do AWS para envio ao Container Registry
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+
+    - name: Login no Container Registry
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Gerando imagem para o ECR
+      env:
+        CONTAINER_REGISTRY: ${{ secrets.HOLDER_CONTAINER_REGISTRY }}
+        CONTAINER_REGISTRY_URL: ${{ secrets.CONTAINER_REGISTRY_URL }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $CONTAINER_REGISTRY_URL/$CONTAINER_REGISTRY:$IMAGE_TAG holder
+        docker push $CONTAINER_REGISTRY_URL/$CONTAINER_REGISTRY:$IMAGE_TAG
