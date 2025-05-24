@@ -45,11 +45,24 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2
 
+    - name: Obtendo o ARN da ultima task definition
+      run: |
+        LATEST=$(aws ecs list-task-definitions \
+          --family-prefix holder-task-definition \
+          --status ACTIVE \
+          --sort DESC \
+          --max-items 1 \
+          --query 'taskDefinitionArns[0]' \
+          --output text)
+        echo "TASK_DEFINITION=$LATEST" >> $GITHUB_ENV
+
     - name: Baixando task definition
       env:
-        TASK_DEFINITION: ${{ secrets.HOLDER_TASK_DEFINITION_ARN }}
+        TASK_DEFINITION: ${{ env.TASK_DEFINITION }}
       run: |
-        aws ecs describe-task-definition --task-definition $TASK_DEFINITION --query taskDefinition > task-definition.json
+        aws ecs describe-task-definition \
+          --task-definition $TASK_DEFINITION \
+          --query taskDefinition > task-definition.json
 
     - name: Trocando o ID da imagem para a nova na task definition
       id: task-definition
