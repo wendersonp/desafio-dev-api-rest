@@ -243,6 +243,9 @@ resource "aws_ecs_service" "holder_service" {
       security_groups = [aws_security_group.ecs_security_group.id]
       subnets = data.aws_subnets.private_subnets.ids
     }
+    service_registries {
+      registry_arn =
+    }
 
     load_balancer {
       container_name = "holder-container"
