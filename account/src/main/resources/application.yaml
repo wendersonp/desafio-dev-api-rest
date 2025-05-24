@@ -27,9 +27,9 @@ spring:
 
 springdoc:
   swagger-ui:
-    path: /holder/swagger-ui.html
+    path: /account/swagger-ui.html
   api-docs:
-    path: /holder/api-docs
+    path: /account/api-docs
 
 account:
   default-branch: 0001
