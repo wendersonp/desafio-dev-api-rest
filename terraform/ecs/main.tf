@@ -111,8 +111,8 @@ resource "aws_ecs_task_definition" "holder_task_definition" {
     family = "holder-task-definition"
     network_mode = "awsvpc"
     requires_compatibilities = ["FARGATE"]
-    cpu = "256"
-    memory = "512"
+    cpu = "512"
+    memory = "1024"
     execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
     task_role_arn = aws_iam_role.ecs_task_role.arn
@@ -121,8 +121,8 @@ resource "aws_ecs_task_definition" "holder_task_definition" {
       {
         name = "holder-container"
         image = var.ecr_holder_url
-        cpu = 256
-        memory = 512
+        cpu = 512
+        memory = 1024
         essential = true
         portMappings = [
           {
@@ -168,8 +168,8 @@ resource "aws_ecs_task_definition" "account_task_definition" {
     family = "account-task-definition"
     network_mode = "awsvpc"
     requires_compatibilities = ["FARGATE"]
-    cpu = "256"
-    memory = "512"
+    cpu = "512"
+    memory = "1024"
     execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
     task_role_arn = aws_iam_role.ecs_task_role.arn
@@ -178,8 +178,8 @@ resource "aws_ecs_task_definition" "account_task_definition" {
       {
         name = "account-container"
         image = var.ecr_account_url
-        cpu = 256
-        memory = 512
+        cpu = 512
+        memory = 1024
         essential = true
         portMappings = [
           {
