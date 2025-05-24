@@ -7,6 +7,10 @@ data "aws_subnets" "private_subnets" {
       name = "vpc-id"
       values = [var.vpc_id]
     }
+    filter {
+      name = "tag:Name"
+      values = ["*private*"]
+    }
 }
 
 data "aws_db_instance" "digital_account_db_instance" {
@@ -130,7 +134,7 @@ resource "aws_ecs_task_definition" "holder_task_definition" {
             hostPort = 8081
           }
         ]
-        log_configuration = {
+        logConfiguration = {
           logDriver = "awslogs"
           options = {
             awslogs-group         = "/ecs/holder"
@@ -187,7 +191,7 @@ resource "aws_ecs_task_definition" "account_task_definition" {
             hostPort = 8082
           }
         ]
-        log_configuration = {
+        logConfiguration = {
           logDriver = "awslogs"
           options = {
             awslogs-group         = "/ecs/account"
