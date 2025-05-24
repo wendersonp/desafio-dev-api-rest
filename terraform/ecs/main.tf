@@ -130,26 +130,34 @@ resource "aws_ecs_task_definition" "holder_task_definition" {
             hostPort = 8081
           }
         ]
+        log_configuration = {
+          logDriver = "awslogs"
+          options = {
+            awslogs-group         = "/ecs/holder"
+            awslogs-region        = var.region
+            awslogs-stream-prefix = "ecs"
+          }
+        }
         environment = [
           {
             name = "DB_HOST"
-            valueFrom = data.aws_db_instance.digital_account_db_instance.endpoint
+            value = data.aws_db_instance.digital_account_db_instance.endpoint
           },
           {
             name = "DB_PORT"
-            valueFrom = data.aws_db_instance.digital_account_db_instance.port
+            value = tostring(data.aws_db_instance.digital_account_db_instance.port)
           },
           {
             name = "DB_USER"
-            valueFrom = var.db_instance_username
+            value = var.db_instance_username
           },
           {
             name = "DB_PASSWORD"
-            valueFrom = var.db_instance_password
+            value = var.db_instance_password
           },
           {
             name = "AWS_SALT_SECRET_ID"
-            valueFrom = data.aws_secretsmanager_secret.aws_salt_secret.arn
+            value = data.aws_secretsmanager_secret.aws_salt_secret.arn
           }
         ]
       }
@@ -179,26 +187,34 @@ resource "aws_ecs_task_definition" "account_task_definition" {
             hostPort = 8082
           }
         ]
+        log_configuration = {
+          logDriver = "awslogs"
+          options = {
+            awslogs-group         = "/ecs/account"
+            awslogs-region        = var.region
+            awslogs-stream-prefix = "ecs"
+          }
+        }
         environment = [
           {
             name = "DB_HOST"
-            valueFrom = data.aws_db_instance.digital_account_db_instance.endpoint
+            value = data.aws_db_instance.digital_account_db_instance.endpoint
           },
           {
             name = "DB_PORT"
-            valueFrom = data.aws_db_instance.digital_account_db_instance.port
+            value = tostring(data.aws_db_instance.digital_account_db_instance.port)
           },
           {
             name = "DB_USER"
-            valueFrom = var.db_instance_username
+            value = var.db_instance_username
           },
           {
             name = "DB_PASSWORD"
-            valueFrom = var.db_instance_password
+            value = var.db_instance_password
           },
           {
             name = "HOLDER_URL"
-            valueFrom = var.holder_url
+            value = var.holder_url
           }
         ]
       }
@@ -233,4 +249,12 @@ resource "aws_ecs_service" "account_service" {
 
 }
 
+resource "aws_cloudwatch_log_group" "holder_logs" {
+  name              = "/ecs/holder"
+  retention_in_days = 30  # Set your desired log retention period
+}
 
+resource "aws_cloudwatch_log_group" "account_logs" {
+  name              = "/ecs/account"
+  retention_in_days = 30  # Set your desired log retention period
+}

@@ -14,7 +14,9 @@ resource "aws_iam_policy" "ecs_ecr_custom_policy" {
         Action = [
           "ecs:DescribeTaskDefinition",
           "ecs:UpdateService",
-          "ecs:RegisterTaskDefinition"
+          "ecs:RegisterTaskDefinition",
+          "ecs:DescribeServices",
+          "iam:PassRole"
         ],
         Resource = "*"
       },
