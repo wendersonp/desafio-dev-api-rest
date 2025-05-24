@@ -13,7 +13,8 @@ resource "aws_iam_policy" "ecs_ecr_custom_policy" {
         Effect = "Allow",
         Action = [
           "ecs:DescribeTaskDefinition",
-          "ecs:UpdateService"
+          "ecs:UpdateService",
+          "ecs:RegisterTaskDefinition"
         ],
         Resource = "*"
       },
