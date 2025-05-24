@@ -237,6 +237,12 @@ resource "aws_ecs_service" "holder_service" {
       subnets = data.aws_subnets.private_subnets.ids
     }
 
+    load_balancer {
+      container_name = "holder-container"
+      container_port = 8081
+      target_group_arn = var.holder_target_group_arn
+    }
+
 }
 
 resource "aws_ecs_service" "account_service" {
@@ -251,6 +257,11 @@ resource "aws_ecs_service" "account_service" {
       subnets = data.aws_subnets.private_subnets.ids
     }
 
+    load_balancer {
+      container_name = "account-container"
+      container_port = 8082
+      target_group_arn = var.account_target_group_arn
+    }
 }
 
 resource "aws_cloudwatch_log_group" "holder_logs" {
