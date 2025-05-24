@@ -10,9 +10,9 @@ spring:
         simple:
           instances:
             holder-service:
-              - uri: http://localhost:8081
+              - uri: http://${HOLDER_URL:localhost}:8081
             account-service:
-              - uri: http://localhost:8082
+              - uri: http://${ACCOUNT_URL:localhost}:8082
 
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/account
@@ -24,6 +24,11 @@ spring:
     hibernate:
       ddl-auto: update
 
+springdoc:
+  swagger-ui:
+    path: /holder/swagger-ui.html
+  api-docs:
+    path: /holder/api-docs
 
 account:
   default-branch: 0001

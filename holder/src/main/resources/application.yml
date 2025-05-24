@@ -15,6 +15,12 @@ spring:
     hibernate:
       ddl-auto: update
 
+springdoc:
+  swagger-ui:
+    path: /holder/swagger-ui.html
+  api-docs:
+    path: /holder/api-docs
+
 aws:
   salt:
     secretId: ${AWS_SALT_SECRET_ID}
