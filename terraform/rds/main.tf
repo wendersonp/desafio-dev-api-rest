@@ -12,13 +12,14 @@ module "rds_vpc" {
   cidr = "10.0.0.0/16"
   azs = data.aws_availability_zones.available.names
   public_subnets = ["10.0.5.0/24","10.0.6.0/24"]
+  private_subnets = ["10.0.0.0/24","10.0.1.0/24", "10.0.2.0/24","10.0.3.0/24"]
   enable_dns_hostnames = true
   enable_dns_support = true
 }
 
 resource "aws_db_subnet_group" "digital_account_rds_subnet" {
   name = "digital_account_subnet"
-  subnet_ids = module.rds_vpc.public_subnets
+  subnet_ids = module.rds_vpc.private_subnets
 
   tags = {
     Name = "digital_account_rds_subnet"

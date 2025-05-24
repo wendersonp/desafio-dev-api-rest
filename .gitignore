@@ -46,3 +46,6 @@ replay_pid*
 /terraform/iam/.terraform/providers/registry.terraform.io/hashicorp/aws/5.98.0/linux_amd64/LICENSE.txt
 /terraform/ecr/.terraform/providers/registry.terraform.io/hashicorp/aws/5.98.0/linux_amd64/terraform-provider-aws_v5.98.0_x5
 /terraform/iam/.terraform/providers/registry.terraform.io/hashicorp/aws/5.98.0/linux_amd64/terraform-provider-aws_v5.98.0_x5
+/terraform/ecs/.terraform.lock.hcl
+/terraform/ecs/.terraform/providers/registry.terraform.io/hashicorp/aws/5.98.0/linux_amd64/LICENSE.txt
+/terraform/ecs/.terraform/providers/registry.terraform.io/hashicorp/aws/5.98.0/linux_amd64/terraform-provider-aws_v5.98.0_x5

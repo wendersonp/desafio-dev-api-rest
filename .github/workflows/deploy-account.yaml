@@ -9,23 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-#    - name: Configurando o JDK
-#      uses: actions/setup-java@v2
-#      with:
-#        java-version: '21'
-#        distribution: 'temurin'
-
-# Comentado pois o build é feito a partir do Dockerfile
-#    - name: Cache Maven packages
-#      uses: actions/cache@v4
-#      with:
-#        path: ~/.m2
-#        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-#        restore-keys: ${{ runner.os }}-m2
-#
-#    - name: Empacotando a aplicação
-#      run: mvn -B package --file account/pom.xml
-
     - name: Configurando credenciais do AWS para envio ao Container Registry
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -44,4 +27,28 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $CONTAINER_REGISTRY_URL/$CONTAINER_REGISTRY:$IMAGE_TAG account
+        docker tag $CONTAINER_REGISTRY_URL/$CONTAINER_REGISTRY:$IMAGE_TAG $CONTAINER_REGISTRY_URL/$CONTAINER_REGISTRY:latest
         docker push $CONTAINER_REGISTRY_URL/$CONTAINER_REGISTRY:$IMAGE_TAG
+        docker push $CONTAINER_REGISTRY_URL/$CONTAINER_REGISTRY:latest
+
+    - name: Baixando task definition
+      env:
+        TASK_DEFINITION: ${{ secrets.ACCOUNT_TASK_DEFINITION_ARN }}
+      run: |
+        aws ecs describe-task-definition --task-definition $TASK_DEFINITION --query taskDefinition > task-definition.json
+
+    - name: Trocando o ID da imagem para a nova na task definition
+      id: task-definition
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: account-container
+        image: ${{ secrets.CONTAINER_REGISTRY_URL }}/${{ secrets.ACCOUNT_CONTAINER_REGISTRY }}:latest
+
+    - name: Realizando deploy
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-definition.outputs.task-definition }}
+        service: account-service
+        cluster: digital-account-cluster
+        wait-for-service-stability: true
