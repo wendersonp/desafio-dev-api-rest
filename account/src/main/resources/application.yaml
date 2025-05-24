@@ -10,9 +10,9 @@ spring:
         simple:
           instances:
             holder-service:
-              - uri: http://${HOLDER_URL:localhost}:8081
+              - uri: ${HOLDER_URL:http://localhost:8081}
             account-service:
-              - uri: http://${ACCOUNT_URL:localhost}:8082
+              - uri: ${ACCOUNT_URL:http://localhost:8082}
 
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/account

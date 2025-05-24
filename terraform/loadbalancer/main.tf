@@ -58,6 +58,7 @@ resource "aws_lb_target_group" "account_target_group" {
       interval = 40
       healthy_threshold = 2
       unhealthy_threshold = 5
+
   }
 }
 

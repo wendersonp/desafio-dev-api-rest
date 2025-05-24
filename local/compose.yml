@@ -57,6 +57,7 @@ services:
     container_name: account
     image: 279729537895.dkr.ecr.us-east-2.amazonaws.com/account-ecr:0.1.0
     env_file:
+      - ../account/local.env
       - ./db.env
 
 volumes:
