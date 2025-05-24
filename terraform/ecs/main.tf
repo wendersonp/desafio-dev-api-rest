@@ -20,15 +20,10 @@ data "aws_db_instance" "digital_account_db_instance" {
 data "aws_secretsmanager_secret" "aws_salt_secret" {
   name = var.holder_service_salt_name
 }
-resource "aws_service_discovery_http_namespace" "digital_account_namespace" {
-  name = "digital-account"
-}
 
 resource "aws_ecs_cluster" "digital_account_cluster" {
     name = "digital-account-cluster"
-    service_connect_defaults {
-      namespace = aws_service_discovery_http_namespace.digital_account_namespace.arn
-    }
+
     setting {
       name = "containerInsights"
       value = "enabled"
@@ -243,14 +238,15 @@ resource "aws_ecs_service" "holder_service" {
       security_groups = [aws_security_group.ecs_security_group.id]
       subnets = data.aws_subnets.private_subnets.ids
     }
-    service_registries {
-      registry_arn =
-    }
 
     load_balancer {
       container_name = "holder-container"
       container_port = 8081
       target_group_arn = var.holder_target_group_arn
+    }
+
+    service_registries {
+      registry_arn = var.holder_service_discovery_arn
     }
 
 }
@@ -271,6 +267,10 @@ resource "aws_ecs_service" "account_service" {
       container_name = "account-container"
       container_port = 8082
       target_group_arn = var.account_target_group_arn
+    }
+
+    service_registries {
+      registry_arn = var.account_service_discovery_arn
     }
 }
 

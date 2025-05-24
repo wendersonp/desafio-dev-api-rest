@@ -60,3 +60,13 @@ variable "account_target_group_arn" {
   type = string
   description = "ARN do target group do account service"
 }
+
+variable "holder_service_discovery_arn" {
+  type = string
+  description = "ARN do service discovery do holder service"
+}
+
+variable "account_service_discovery_arn" {
+  type = string
+  description = "ARN do service discovery do account service"
+}
