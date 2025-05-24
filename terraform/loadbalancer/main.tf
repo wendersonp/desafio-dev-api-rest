@@ -37,6 +37,10 @@ resource "aws_lb_target_group" "holder_target_group" {
     health_check {
         path = "/actuator/health"
         port = 8081
+        timeout = 30
+        interval = 40
+        healthy_threshold = 2
+        unhealthy_threshold = 5
     }
 }
 
@@ -50,6 +54,10 @@ resource "aws_lb_target_group" "account_target_group" {
   health_check {
       path = "/actuator/health"
       port = 8082
+      timeout = 30
+      interval = 40
+      healthy_threshold = 2
+      unhealthy_threshold = 5
   }
 }
 
