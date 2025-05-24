@@ -145,7 +145,7 @@ resource "aws_ecs_task_definition" "holder_task_definition" {
         environment = [
           {
             name = "DB_HOST"
-            value = data.aws_db_instance.digital_account_db_instance.endpoint
+            value = data.aws_db_instance.digital_account_db_instance.address
           },
           {
             name = "DB_PORT"
@@ -202,7 +202,7 @@ resource "aws_ecs_task_definition" "account_task_definition" {
         environment = [
           {
             name = "DB_HOST"
-            value = data.aws_db_instance.digital_account_db_instance.endpoint
+            value = data.aws_db_instance.digital_account_db_instance.address
           },
           {
             name = "DB_PORT"
