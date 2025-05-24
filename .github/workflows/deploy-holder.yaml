@@ -53,7 +53,7 @@ jobs:
           --sort DESC \
           --max-items 1 \
           --query 'taskDefinitionArns[0]' \
-          --output text)
+          --output json | tr -d '"')
         echo "TASK_DEFINITION=$LATEST" >> $GITHUB_ENV
 
     - name: Baixando task definition
