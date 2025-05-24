@@ -20,10 +20,15 @@ data "aws_db_instance" "digital_account_db_instance" {
 data "aws_secretsmanager_secret" "aws_salt_secret" {
   name = var.holder_service_salt_name
 }
+resource "aws_service_discovery_http_namespace" "digital_account_namespace" {
+  name = "digital-account"
+}
 
 resource "aws_ecs_cluster" "digital_account_cluster" {
     name = "digital-account-cluster"
-
+    service_connect_defaults {
+      namespace = aws_service_discovery_http_namespace.digital_account_namespace.arn
+    }
     setting {
       name = "containerInsights"
       value = "enabled"
@@ -225,6 +230,8 @@ resource "aws_ecs_task_definition" "account_task_definition" {
     ])
 }
 
+
+
 resource "aws_ecs_service" "holder_service" {
     name = "holder-service"
     cluster = aws_ecs_cluster.digital_account_cluster.id
@@ -273,3 +280,5 @@ resource "aws_cloudwatch_log_group" "account_logs" {
   name              = "/ecs/account"
   retention_in_days = 30  # Set your desired log retention period
 }
+
+
