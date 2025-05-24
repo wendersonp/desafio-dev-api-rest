@@ -50,3 +50,13 @@ variable "holder_url" {
   type = string
   description = "URL do holder service"
 }
+
+variable "holder_target_group_arn" {
+  type        = string
+  description = "ARN do target group do holder service"
+}
+
+variable "account_target_group_arn" {
+  type = string
+  description = "ARN do target group do account service"
+}
