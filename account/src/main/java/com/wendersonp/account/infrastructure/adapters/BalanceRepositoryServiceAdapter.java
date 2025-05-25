@@ -27,4 +27,9 @@ public class BalanceRepositoryServiceAdapter implements BalanceRepositoryDrivenP
     public BalanceModel findByIdentifier(UUID identifier) {
         return balanceRepository.findByIdentifier(identifier).toModel();
     }
+
+    @Override
+    public void delete(UUID balanceIdentifier) {
+        balanceRepository.deleteById(balanceIdentifier);
+    }
 }

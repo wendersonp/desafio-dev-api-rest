@@ -15,4 +15,7 @@ public interface AccountRepositoryDrivenPort {
     Optional<AccountModel> findByIdentifier(UUID identifier);
 
     List<AccountModel> findAll();
+
+
+    Optional<AccountModel> findByHolderId(UUID holderId);
 }

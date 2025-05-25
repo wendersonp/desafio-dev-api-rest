@@ -25,4 +25,6 @@ public interface AccountCoreDrivingPort {
     AccountModel setBlockStatus(UUID identifier, BlockStatus status);
 
     List<AccountModel> findAll();
+
+    void closeAccount(UUID identifier);
 }

@@ -57,4 +57,9 @@ public class AccountApplicationServiceImpl implements AccountApplicationService 
                 .map(AccountResponseDTO::new)
                 .toList();
     }
+
+    @Override
+    public void closeAccount(UUID identifier) {
+        accountCoreService.closeAccount(identifier);
+    }
 }

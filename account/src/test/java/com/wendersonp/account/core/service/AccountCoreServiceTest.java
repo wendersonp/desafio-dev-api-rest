@@ -26,10 +26,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AccountCoreServiceTest {
@@ -93,16 +94,35 @@ class AccountCoreServiceTest {
         accountModel.setHolderId(holderModel.getIdentifier());
 
         when(holderService.findByDocument(documentNumber)).thenReturn(Optional.of(holderModel));
-        when(accountRepository.exists(holderModel.getIdentifier())).thenReturn(true);
+        when(accountRepository.findByHolderId(holderModel.getIdentifier())).thenReturn(Optional.of(accountModel));
 
         Exception exception = assertThrows(BusinessException.class, () -> accountCoreService.createAccount(documentNumber));
         assertEquals(ExceptionMessageEnum.ACCOUNT_EXISTS.getMessage(), exception.getMessage());
     }
 
     @Test
+    void mustReactivateAccountWhenItsClosed() {
+        accountModel.setHolderId(holderModel.getIdentifier());
+        accountModel.setStatus(BlockStatus.CLOSED);
+
+        when(holderService.findByDocument(documentNumber)).thenReturn(Optional.of(holderModel));
+        when(accountRepository.findByHolderId(holderModel.getIdentifier())).thenReturn(Optional.of(accountModel));
+        when(accountRepository.persist(any(AccountModel.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
+
+        AccountModel accountCreated = accountCoreService.createAccount(documentNumber);
+
+        assertEquals(holderModel.getIdentifier(), accountCreated.getHolderId());
+        assertNotNull(accountCreated.getAccountNumber());
+        assertEquals(accountPropertiesModel.getDefaultBranch(), accountCreated.getBranch());
+        assertEquals(accountPropertiesModel.getWithdrawDefaultLimit(), accountCreated.getWithdrawDailyLimit());
+        assertEquals(BlockStatus.UNBLOCKED, accountCreated.getStatus());
+        assertEquals(balanceModel, accountCreated.getBalance().get());
+    }
+
+    @Test
     void mustCreateAccountSuccessfully() {
         when(holderService.findByDocument(documentNumber)).thenReturn(Optional.of(holderModel));
-        when(accountRepository.exists(holderModel.getIdentifier())).thenReturn(false);
+        when(accountRepository.findByHolderId(any())).thenReturn(Optional.empty());
         when(accountDefaultPropertiesDrivenPort.getDefaultProperties()).thenReturn(accountPropertiesModel);
         when(balanceCoreService.createBalance()).thenReturn(balanceModel);
         when(accountRepository.persist(any(AccountModel.class))).thenAnswer(AdditionalAnswers.returnsFirstArg());
@@ -193,5 +213,36 @@ class AccountCoreServiceTest {
 
         var accountBlocked = accountCoreService.setBlockStatus(identifier, BlockStatus.BLOCKED);
         assertEquals(BlockStatus.BLOCKED, accountBlocked.getStatus());
+    }
+
+    @Test
+    void mustNotCloseAccountWhenNotFound() {
+        // Arrange
+        UUID notFoundIdentifier = UUID.randomUUID();
+
+        when(accountRepository.findByIdentifier(notFoundIdentifier)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            accountCoreService.closeAccount(notFoundIdentifier);
+        });
+
+        assertEquals(ExceptionMessageEnum.ACCOUNT_NOT_FOUND.getMessage(), exception.getMessage());
+        verify(holderService, never()).removeByIdentifier(any());
+        verify(accountRepository, never()).persist(any());
+    }
+
+    @Test
+    void mustCloseAccountSuccessfully() {
+        UUID accountId = accountModel.getIdentifier();
+        UUID holderId = accountModel.getHolderId();
+
+        when(accountRepository.findByIdentifier(accountId)).thenReturn(Optional.of(accountModel));
+
+        accountCoreService.closeAccount(accountId);
+
+        verify(holderService).removeByIdentifier(holderId);
+        assertEquals(BlockStatus.CLOSED, accountModel.getStatus());
+        verify(accountRepository).persist(accountModel);
     }
 }

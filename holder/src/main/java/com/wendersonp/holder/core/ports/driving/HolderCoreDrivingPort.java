@@ -18,4 +18,6 @@ public interface HolderCoreDrivingPort {
     List<HolderModel> findAll();
 
     void deleteByIdentifier(UUID identifier);
+
+    void reactivate(UUID identifier);
 }

@@ -56,4 +56,10 @@ public class AccountControllerV1 {
     public List<AccountResponseDTO> findAll() {
         return accountApplicationService.findAll();
     }
+
+    @DeleteMapping("/close/{identifier}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void closeAccount(@PathVariable UUID identifier) {
+        accountApplicationService.closeAccount(identifier);
+    }
 }

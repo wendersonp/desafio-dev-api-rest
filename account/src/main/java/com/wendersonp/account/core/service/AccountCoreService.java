@@ -46,7 +46,13 @@ public class AccountCoreService implements AccountCoreDrivingPort {
             throw new BusinessException(ExceptionMessageEnum.HOLDER_NOT_FOUND);
         }
         HolderModel holder = holderModelOpt.get();
-        validateHolder(holder);
+        AccountModel accountModel;
+
+        accountModel = validateHolder(holder);
+
+        if (accountModel != null) {
+            return accountModel;
+        }
 
         log.info("Creating account for holder {}", holder.getIdentifier());
 
@@ -54,7 +60,7 @@ public class AccountCoreService implements AccountCoreDrivingPort {
 
         Supplier<BalanceModel> balanceModel = balanceCoreService::createBalance;
 
-        AccountModel accountModel = AccountModel.builder()
+        accountModel = AccountModel.builder()
                 .holderId(holder.getIdentifier())
                 .accountNumber(GenerationUtils.generateAccountNumber())
                 .branch(accountProperties.getDefaultBranch())
@@ -94,13 +100,33 @@ public class AccountCoreService implements AccountCoreDrivingPort {
         return accountRepository.findAll();
     }
 
-    private void validateHolder(HolderModel holderModel) {
+    @Override
+    public void closeAccount(UUID identifier) {
+        AccountModel accountModel = findByIdentifier(identifier);
+        holderService.removeByIdentifier(accountModel.getHolderId());
+        accountModel.setStatus(BlockStatus.CLOSED);
+        accountRepository.persist(accountModel);
+    }
+
+    private AccountModel validateHolder(HolderModel holderModel) {
         if (holderModel.getStatus() != StatusEnum.ACTIVE) {
             throw new BusinessException(ExceptionMessageEnum.HOLDER_INACTIVE);
         }
-        if (Boolean.TRUE.equals(accountRepository.exists(holderModel.getIdentifier()))) {
-            throw new BusinessException(ExceptionMessageEnum.ACCOUNT_EXISTS);
+        Optional<AccountModel> accountModelOpt = accountRepository.findByHolderId(holderModel.getIdentifier());
+        if (accountModelOpt.isPresent()) {
+            AccountModel account = accountModelOpt.get();
+            if (account.getStatus() == BlockStatus.CLOSED) {
+                return reactivateAccount(account);
+            } else {
+                throw new BusinessException(ExceptionMessageEnum.ACCOUNT_EXISTS);
+            }
         }
+        return null;
+    }
+
+    private AccountModel reactivateAccount(AccountModel account) {
+        account.setStatus(BlockStatus.UNBLOCKED);
+        return accountRepository.persist(account);
     }
 
     private void validateAccountForMovement(AccountModel accountModel) {

@@ -45,4 +45,9 @@ public class AccountRepositoryServiceAdapter implements AccountRepositoryDrivenP
                 .map(AccountEntity::toModel)
                 .toList();
     }
+
+    @Override
+    public Optional<AccountModel> findByHolderId(UUID holderId) {
+        return accountEntityRepository.findByHolderId(holderId).map(AccountEntity::toModel);
+    }
 }
