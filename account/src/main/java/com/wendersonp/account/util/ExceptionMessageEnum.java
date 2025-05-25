@@ -17,7 +17,8 @@ public enum ExceptionMessageEnum {
     BALANCE_NOT_FOUND("balance_not_found", "Saldo nao foi encontrado"),
     INSUFFICIENT_BALANCE("insufficient_balance", "Saldo insuficiente"),
     INVALID_DATES("invalid_dates", "As datas inseridas para a consulta são inválidas"),
-    FUTURE_DATE("future_date", "Data futura nao permitida");
+    FUTURE_DATE("future_date", "Data futura nao permitida"),
+    HOLDER_SERVICE_UNAVAILABLE("holder_service_unavailable", "Servico de portadores indisponivel");
 
     private final String code;
     private final String message;

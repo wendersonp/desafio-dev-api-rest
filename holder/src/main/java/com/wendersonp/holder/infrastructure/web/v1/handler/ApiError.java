@@ -1,4 +1,4 @@
-package com.wendersonp.account.infrastructure.web.v1.handler;
+package com.wendersonp.holder.infrastructure.web.v1.handler;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

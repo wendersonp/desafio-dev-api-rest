@@ -30,7 +30,7 @@ public class AWSSecretManagerServiceImpl implements AWSSecretManagerService {
             GetSecretValueResponse response = secretsManagerClient.getSecretValue(getSecretValueRequest);
             return response.secretString();
         } catch (SecretsManagerException exception) {
-            throw new AWSException(ExceptionMessageEnum.COULD_NOT_RETRIEVE_SECRET);
+            throw new AWSException(ExceptionMessageEnum.COULD_NOT_RETRIEVE_SECRET, exception);
         }
     }
 }
