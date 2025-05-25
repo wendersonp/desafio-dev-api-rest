@@ -15,4 +15,6 @@ public interface HolderApplicationService {
     void deleteByIdentifier(UUID identifier);
 
     List<HolderResponseDTO> findAll();
+
+    void reactivate(UUID identifier);
 }

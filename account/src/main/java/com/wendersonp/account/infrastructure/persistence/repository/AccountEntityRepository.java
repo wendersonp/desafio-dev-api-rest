@@ -19,4 +19,6 @@ public interface AccountEntityRepository extends JpaRepository<AccountEntity, UU
             }
     )
     Optional<AccountEntity> findByIdentifier(UUID identifier);
+
+    Optional<AccountEntity> findByHolderId(UUID holderId);
 }

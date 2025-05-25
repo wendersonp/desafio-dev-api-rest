@@ -9,4 +9,6 @@ public interface BalanceRepositoryDrivenPort {
     BalanceModel persist(BalanceModel balanceModel);
 
     BalanceModel findByIdentifier(UUID identifier);
+
+    void delete(UUID balanceIdentifier);
 }

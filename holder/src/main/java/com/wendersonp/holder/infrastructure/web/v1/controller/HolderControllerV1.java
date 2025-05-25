@@ -56,4 +56,11 @@ public class HolderControllerV1 {
         return holderApplicationService.findAll();
     }
 
+    @PatchMapping("/{identifier}/reactivate")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void reactivate(@PathVariable UUID identifier) {
+        log.info("Reactivate holder by identifier {}", identifier);
+        holderApplicationService.reactivate(identifier);
+    }
+
 }

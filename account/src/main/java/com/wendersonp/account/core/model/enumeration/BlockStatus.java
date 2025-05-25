@@ -1,7 +1,7 @@
 package com.wendersonp.account.core.model.enumeration;
 
 public enum BlockStatus {
-    BLOCKED("B"), UNBLOCKED("U");
+    BLOCKED("B"), UNBLOCKED("U"), CLOSED("C");
 
     private final String value;
 

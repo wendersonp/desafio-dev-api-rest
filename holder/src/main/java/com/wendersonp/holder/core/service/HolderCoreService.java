@@ -79,6 +79,11 @@ public class HolderCoreService implements HolderCoreDrivingPort {
         holderRepositoryDrivenPort.setStatus(identifier, StatusEnum.INACTIVE);
     }
 
+    @Override
+    public void reactivate(UUID identifier) {
+        holderRepositoryDrivenPort.setStatus(identifier, StatusEnum.ACTIVE);
+    }
+
     private Optional<HolderModel> findByDocumentHash(byte[] documentHash) {
         return holderRepositoryDrivenPort.findByDocumentHash(documentHash);
     }

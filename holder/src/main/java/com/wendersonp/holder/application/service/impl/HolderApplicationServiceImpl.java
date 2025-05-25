@@ -48,4 +48,9 @@ public class HolderApplicationServiceImpl implements HolderApplicationService {
                 .map(HolderResponseDTO::new)
                 .toList();
     }
+
+    @Override
+    public void reactivate(UUID identifier) {
+        holderService.reactivate(identifier);
+    }
 }

@@ -20,4 +20,6 @@ public interface AccountApplicationService {
     AccountResponseDTO unblockAccount(UUID identifier);
 
     List<AccountResponseDTO> findAll();
+
+    void closeAccount(UUID identifier);
 }

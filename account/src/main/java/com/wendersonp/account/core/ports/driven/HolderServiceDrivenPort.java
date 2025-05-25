@@ -11,4 +11,7 @@ public interface HolderServiceDrivenPort {
 
     Optional<HolderModel> findByIdentifier(UUID identifier);
 
+    void removeByIdentifier(UUID identifier);
+
+    void reactivate(UUID holderId);
 }
