@@ -86,7 +86,7 @@ Toda a infraestrutura utilizada foi descrita seguindo o conceito IaC, utilizando
 Todo o código escrito para o provisionamento da infraestrutura foi feito em HCL (HashiCorp Configuration Language) e está no diretório 
 **terraform** do repositório.
 
-Descrição dos fluxos principais: 
+### Descrição dos fluxos principais: 
 
 - Abertura de conta:
 
