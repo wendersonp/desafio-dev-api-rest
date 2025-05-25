@@ -1,1 +1,0 @@
-vpc_id = "vpc-09df0ab3d6d0faa18"
