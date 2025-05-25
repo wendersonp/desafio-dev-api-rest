@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -30,7 +29,7 @@ public class MovementRepositoryServiceAdapter implements MovementRepositoryDrive
 
     @Override
     public BigDecimal getTotalMovementWithinAPeriod(LocalDateTime beginningDate, LocalDateTime endingDate, UUID accountIdentifier, MovementType type) {
-        BigDecimal total = movementRepository.totalMovementBetweenTwoDates(beginningDate, endingDate, accountIdentifier, type.name());
+        BigDecimal total = movementRepository.totalMovementBetweenTwoDates(beginningDate, endingDate, accountIdentifier, type.value());
         return total == null ? BigDecimal.ZERO : total;
     }
 

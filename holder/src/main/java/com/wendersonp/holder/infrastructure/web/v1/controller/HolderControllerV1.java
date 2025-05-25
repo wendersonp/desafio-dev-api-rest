@@ -3,6 +3,7 @@ package com.wendersonp.holder.infrastructure.web.v1.controller;
 import com.wendersonp.holder.application.dto.HolderRequestDTO;
 import com.wendersonp.holder.application.dto.HolderResponseDTO;
 import com.wendersonp.holder.application.service.HolderApplicationService;
+import com.wendersonp.holder.infrastructure.web.v1.controller.docs.HolderControllerV1ApiDocs;
 import com.wendersonp.holder.infrastructure.web.v1.routes.V1Routes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(V1Routes.HOLDER_PATH)
 @RequiredArgsConstructor
-public class HolderControllerV1 {
+public class HolderControllerV1 implements HolderControllerV1ApiDocs {
 
     private final HolderApplicationService holderApplicationService;
 
@@ -57,7 +58,7 @@ public class HolderControllerV1 {
     }
 
     @PatchMapping("/{identifier}/reactivate")
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void reactivate(@PathVariable UUID identifier) {
         log.info("Reactivate holder by identifier {}", identifier);
         holderApplicationService.reactivate(identifier);

@@ -5,6 +5,7 @@ import com.wendersonp.account.application.dto.BalanceResponseDTO;
 import com.wendersonp.account.application.dto.MovementRequestDTO;
 import com.wendersonp.account.application.service.AccountApplicationService;
 import com.wendersonp.account.core.model.enumeration.BlockStatus;
+import com.wendersonp.account.core.model.enumeration.MovementType;
 import com.wendersonp.account.core.ports.driving.AccountCoreDrivingPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,10 @@ public class AccountApplicationServiceImpl implements AccountApplicationService 
 
     @Override
     public AccountResponseDTO createAccount(String documentNumber) {
-        return new AccountResponseDTO(accountCoreService.createAccount(documentNumber));
+        String formattedDocumentNumber = documentNumber
+                .replace(".", "")
+                .replace("-", "");
+        return new AccountResponseDTO(accountCoreService.createAccount(formattedDocumentNumber));
     }
 
     @Override
@@ -35,7 +39,7 @@ public class AccountApplicationServiceImpl implements AccountApplicationService 
         var balanceModel = accountCoreService.makeMovementOnBalance(
                 movementRequestDTO.accountIdentifier(),
                 movementRequestDTO.amount(),
-                movementRequestDTO.type(),
+                MovementType.valueOf(movementRequestDTO.type()),
                 movementRequestDTO.description()
         );
         return new BalanceResponseDTO(balanceModel);

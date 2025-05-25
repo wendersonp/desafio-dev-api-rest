@@ -1,6 +1,7 @@
 package com.wendersonp.account.application.dto;
 
 import com.wendersonp.account.core.model.enumeration.MovementType;
+import com.wendersonp.account.util.EnumValue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -16,7 +17,8 @@ public record MovementRequestDTO(
         BigDecimal amount,
 
         @NotNull
-        MovementType type,
+        @EnumValue(MovementType.class)
+        String type,
 
         String description) {
 }
