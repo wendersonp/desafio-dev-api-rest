@@ -1,5 +1,6 @@
 package com.wendersonp.account.infrastructure.adapters;
 
+import com.wendersonp.account.core.exceptions.BusinessException;
 import com.wendersonp.account.core.model.HolderModel;
 import com.wendersonp.account.core.ports.driven.HolderServiceDrivenPort;
 import com.wendersonp.account.infrastructure.clients.HolderFeignClient;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class HolderClientServiceAdapter implements HolderServiceDrivenPort {
 
-    public static final String SERVICE_TEMPORARYLY_UNAVAILABLE = "Serviço temporariamente indisponivel";
+    public static final String SERVICE_TEMPORARILY_UNAVAILABLE = "Serviço temporariamente indisponivel";
     private final HolderFeignClient holderFeignClient;
 
     @Override
@@ -59,7 +60,7 @@ public class HolderClientServiceAdapter implements HolderServiceDrivenPort {
             holderFeignClient.removeByIdentifier(identifier);
         } catch (FeignException.NotFound ex) {
             log.error("Holder not found", ex);
-            throw new InfrastructureException(ExceptionMessageEnum.HOLDER_NOT_FOUND, ex);
+            throw new BusinessException(ExceptionMessageEnum.HOLDER_NOT_FOUND);
         } catch (FeignException ex) {
             throw new InfrastructureException(ExceptionMessageEnum.HOLDER_SERVICE_UNAVAILABLE, ex);
         }
@@ -72,14 +73,14 @@ public class HolderClientServiceAdapter implements HolderServiceDrivenPort {
             holderFeignClient.reactivate(holderId);
         } catch (FeignException.NotFound ex) {
             log.error("Holder not found", ex);
-            throw new InfrastructureException(ExceptionMessageEnum.HOLDER_NOT_FOUND, ex);
+            throw new BusinessException(ExceptionMessageEnum.HOLDER_NOT_FOUND);
         } catch (FeignException ex) {
             throw new InfrastructureException(ExceptionMessageEnum.HOLDER_SERVICE_UNAVAILABLE, ex);
         }
     }
 
     public void fallBack() {
-        var circuitBreakerOpenException = new CircuitBreakerException(SERVICE_TEMPORARYLY_UNAVAILABLE);
+        var circuitBreakerOpenException = new CircuitBreakerException(SERVICE_TEMPORARILY_UNAVAILABLE);
         throw new InfrastructureException(ExceptionMessageEnum.HOLDER_SERVICE_UNAVAILABLE, circuitBreakerOpenException);
     }
 }
