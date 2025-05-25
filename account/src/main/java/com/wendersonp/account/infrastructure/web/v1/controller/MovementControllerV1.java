@@ -2,6 +2,7 @@ package com.wendersonp.account.infrastructure.web.v1.controller;
 
 import com.wendersonp.account.application.dto.MovementResponseDTO;
 import com.wendersonp.account.application.service.MovementApplicationService;
+import com.wendersonp.account.infrastructure.web.v1.controller.docs.MovementControllerV1ApiDocs;
 import com.wendersonp.account.infrastructure.web.v1.routes.V1Routes;
 import com.wendersonp.account.util.ResponseEntityFactory;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(V1Routes.MOVEMENT_PATH)
-public class MovementControllerV1 {
+public class MovementControllerV1 implements MovementControllerV1ApiDocs {
 
     private final MovementApplicationService movementApplicationService;
 

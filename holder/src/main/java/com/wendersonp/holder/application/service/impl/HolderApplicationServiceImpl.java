@@ -26,7 +26,10 @@ public class HolderApplicationServiceImpl implements HolderApplicationService {
 
     @Override
     public HolderResponseDTO findByDocument(String documentNumber) {
-        HolderModel holderModel = holderService.findByDocument(documentNumber);
+        String formattedDocumentNumber = documentNumber
+                .replace(".", "")
+                .replace("-", "");
+        HolderModel holderModel = holderService.findByDocument(formattedDocumentNumber);
         return new HolderResponseDTO(holderModel);
     }
 

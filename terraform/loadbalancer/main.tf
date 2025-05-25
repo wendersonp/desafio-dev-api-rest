@@ -38,9 +38,9 @@ resource "aws_lb_target_group" "holder_target_group" {
         path = "/actuator/health"
         port = 8081
         timeout = 30
-        interval = 40
+        interval = 50
         healthy_threshold = 2
-        unhealthy_threshold = 5
+        unhealthy_threshold = 10
     }
 }
 
@@ -55,10 +55,9 @@ resource "aws_lb_target_group" "account_target_group" {
       path = "/actuator/health"
       port = 8082
       timeout = 30
-      interval = 40
+      interval = 50
       healthy_threshold = 2
-      unhealthy_threshold = 5
-
+      unhealthy_threshold = 10
   }
 }
 

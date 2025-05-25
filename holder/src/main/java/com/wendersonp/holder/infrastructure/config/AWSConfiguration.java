@@ -1,4 +1,4 @@
-package com.wendersonp.holder.infrastructure.configuration;
+package com.wendersonp.holder.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
