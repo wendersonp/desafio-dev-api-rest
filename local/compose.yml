@@ -12,6 +12,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U digital" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
 
   localstack:
     image: localstack/localstack:latest
@@ -37,13 +43,16 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - postgres
-      - localstack
+      postgres:
+        condition: service_healthy
+      localstack:
+        condition: service_started
     container_name: holder
     image: 279729537895.dkr.ecr.us-east-2.amazonaws.com/holder-ecr:0.1.0
     env_file:
       - ../holder/local.env
       - ./db.env
+
 
   account:
     build:
@@ -52,8 +61,10 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - postgres
-      - localstack
+      postgres:
+        condition: service_healthy
+      localstack:
+        condition: service_started
     container_name: account
     image: 279729537895.dkr.ecr.us-east-2.amazonaws.com/account-ecr:0.1.0
     env_file:
