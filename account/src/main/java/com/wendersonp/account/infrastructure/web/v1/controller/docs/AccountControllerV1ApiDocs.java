@@ -61,7 +61,7 @@ public interface AccountControllerV1ApiDocs {
     BalanceResponseDTO makeMovementOnBalance(
             @Valid
             @RequestBody(
-                    description = "Detalhes da movimentação", required = true,
+                    description = "Detalhes da movimentação, para o campo type, use DEPOSIT ou WITHDRAW", required = true,
                     content = @Content(schema = @Schema(implementation = MovementRequestDTO.class))
             )
             MovementRequestDTO movementRequestDTO
